@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shorts Media Keys - Chrome Extension</title>
+    <meta name="description" content="A lightweight Chrome Manifest V3 extension that brings full hardware media key support to YouTube Shorts.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="hero scroll-fade">
+        <div class="hero-content">
+            <h1 class="hero-title">Shorts Media Keys</h1>
+            <p class="hero-tagline">A lightweight, zero-dependency Chrome Manifest V3 extension that brings full hardware media key support to YouTube Shorts.</p>
+            <div class="hero-buttons">
+                <a href="https://github.com/FahdDev007/Shorts-Media-Keys" class="btn btn-primary" target="_blank" rel="noopener">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                        <!-- GitHub Icon -->
+                        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                    </svg>
+                    View on GitHub
+                </a>
+                <a href="https://github.com/FahdDev007/Shorts-Media-Keys" class="btn btn-secondary" target="_blank" rel="noopener">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Get the Code
+                </a>
+            </div>
+        </div>
+        
+        <div class="hero-demo" aria-hidden="true">
+            <div class="demo-device">
+                <div class="demo-screen">
+                    <div class="demo-video-track">
+                        <div class="demo-video video-prev"></div>
+                        <div class="demo-video video-active"></div>
+                        <div class="demo-video video-next"></div>
+                    </div>
+                </div>
+                <div class="demo-hardware-keys">
+                    <div class="demo-key prev-key">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                    </div>
+                    <div class="demo-key play-key">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <div class="demo-key next-key">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="problem-solution scroll-fade" id="about">
+            <div class="container comparison-grid">
+                <div class="card card-problem">
+                    <div class="card-header">
+                        <svg class="accent-icon problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                        <h2>The Problem</h2>
+                    </div>
+                    <p>By default, YouTube Shorts doesn't map your keyboard's "Next Track" and "Previous Track" media keys to scrolling. You're completely forced to stay inside the browser window to navigate.</p>
+                </div>
+                <div class="card card-solution">
+                    <div class="card-header">
+                        <svg class="accent-icon solution-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <h2>The Solution</h2>
+                    </div>
+                    <p>This extension seamlessly hooks into the browser's native Media Session API. Your hardware media keys now control YouTube Shorts <strong>even when Chrome is minimized or not focused</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features scroll-fade" id="features">
+            <div class="container">
+                <h2 class="section-title">Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg></div>
+                        <h3>Play/Pause</h3>
+                        <p>Natively supported and deeply integrated into the OS.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></div>
+                        <h3>Next Track</h3>
+                        <p>Automatically scrolls down to the next Short.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></div>
+                        <h3>Previous Track</h3>
+                        <p>Automatically scrolls up to the previous Short.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg></div>
+                        <h3>Zero Bloat</h3>
+                        <p>No background scripts constantly chewing memory. Only activates exactly on <code>youtube.com/shorts/</code>.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+                        <h3>Privacy First</h3>
+                        <p>Only requests the absolute minimum base permissions for YouTube. No tracking, no history reading, no phoning home.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works scroll-fade" id="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How It Works Under the Hood</h2>
+                <div class="tech-card">
+                    <p>Normally, YouTube's own player logic resets custom Media Session bindings on Shorts. To defeat this, the extension bypasses YouTube's strict <code class="tech-tag">CSP</code> by injecting a native script directly into the <code class="tech-tag">MAIN world</code>.</p>
+                    <p>It hijacks <code class="tech-tag">navigator.mediaSession.setActionHandler</code> globally for the tab, ensuring that YouTube cannot overwrite or delete the custom next/prev track key bindings, while leaving normal video playlists untouched.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="installation scroll-fade" id="install">
+            <div class="container">
+                <h2 class="section-title">Manual Installation</h2>
+                <p class="install-subtitle">The extension is not yet on the Chrome Web Store. Install it directly from source.</p>
+                <ol class="install-steps">
+                    <li><span>1</span> Clone or download the <a href="https://github.com/FahdDev007/Shorts-Media-Keys" target="_blank" rel="noopener">GitHub repository</a>.</li>
+                    <li><span>2</span> Open Google Chrome and navigate to <code>chrome://extensions/</code>.</li>
+                    <li><span>3</span> Enable <strong>Developer mode</strong> using the toggle switch in the top right corner.</li>
+                    <li><span>4</span> Click the <strong>Load unpacked</strong> button.</li>
+                    <li><span>5</span> Select the downloaded extension folder.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="limitations scroll-fade" id="limitations">
+            <div class="container">
+                <div class="callout callout-warning">
+                    <div class="callout-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        <h3>Known Limitation</h3>
+                    </div>
+                    <p>OS media key priority generally goes to the application that most recently started playing media. If you have another app (like Spotify, Apple Music, or Discord) actively playing sound, Windows/macOS will route your physical keys to that app instead. <strong>Pause the background music to let Chrome take priority.</strong></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>Created by <a href="https://github.com/FahdDev007" target="_blank" rel="noopener">FahdDev007</a>.</p>
+            <a href="https://github.com/FahdDev007/Shorts-Media-Keys" class="footer-link" target="_blank" rel="noopener">View Source on GitHub</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

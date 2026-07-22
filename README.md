@@ -30,3 +30,4 @@ Because YouTube operates as a Single Page Application (SPA), the extension loads
 ## Known Limitations
 
 - **OS Media Session Priority**: If another application (like Spotify, Apple Music, or a native media player) is actively playing media, your operating system will typically route media keys to whichever app most recently started its media session. If the keys aren't working, pause your background music app to let Chrome take priority.
+
