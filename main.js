@@ -9,14 +9,24 @@ if ('mediaSession' in navigator) {
     // Cache the original setActionHandler so we can call it directly
     const originalSetActionHandler = navigator.mediaSession.setActionHandler.bind(navigator.mediaSession);
 
-    // Override the global setActionHandler to protect nexttrack/previoustrack
+    // Keep track of our handlers so we only set them once per Shorts session
+    let isCurrentlyShorts = false;
+
+    // Override the global setActionHandler to protect our handlers
     navigator.mediaSession.setActionHandler = function(action, handler) {
-        // YouTube often sets nexttrack/previoustrack to null on Shorts
-        // We ignore these calls so our own handlers survive, but ONLY on Shorts pages.
-        if (window.location.pathname.startsWith('/shorts/') && (action === 'nexttrack' || action === 'previoustrack')) {
-            return;
+        if (window.location.pathname.startsWith('/shorts/')) {
+            // We manage nexttrack and previoustrack completely, block YouTube from touching them
+            if (action === 'nexttrack' || action === 'previoustrack') {
+                return;
+            }
+            
+            // For play/pause, let YouTube set its own handlers so the native player works, 
+            // BUT block YouTube from clearing them (setting to null) when backgrounded!
+            if ((action === 'play' || action === 'pause') && !handler) {
+                return; 
+            }
         }
-        // Let all other handlers (play/pause/stop) go through normally
+        // Let all other handlers go through normally
         return originalSetActionHandler(action, handler);
     };
 
@@ -24,13 +34,14 @@ if ('mediaSession' in navigator) {
     function navigateShorts(direction) {
         if (!window.location.pathname.startsWith('/shorts/')) return;
 
-        const btnId = direction === 'next' ? 'navigation-button-down' : 'navigation-button-up';
-        const container = document.getElementById(btnId);
+        // Try to find the global navigation buttons that YouTube Shorts uses
+        const btnId = direction === 'next' ? '#navigation-button-down' : '#navigation-button-up';
+        const container = document.querySelector(btnId);
         
         if (container) {
-            // YouTube's buttons are usually inside the container
-            const btn = container.querySelector('button');
-            if (btn) {
+            // YouTube's buttons are usually inside the container (either a native button or ytd-button-renderer)
+            const btn = container.querySelector('button') || container.querySelector('ytd-button-renderer');
+            if (btn && typeof btn.click === 'function') {
                 console.log('[Shorts Media Keys] Navigating ' + direction);
                 btn.click();
                 return;
@@ -48,22 +59,34 @@ if ('mediaSession' in navigator) {
         }
     }
 
-    // Continuously enforce our Next/Prev handlers 
-    // This runs in the same world as YouTube, so it natively hooks into the OS.
-    setInterval(() => {
-        if (window.location.pathname.startsWith('/shorts/')) {
+
+
+    // Function to check URL and enforce handlers cleanly
+    function ensureHandlers() {
+        const isShorts = window.location.pathname.startsWith('/shorts/');
+        
+        if (isShorts && !isCurrentlyShorts) {
+            isCurrentlyShorts = true;
             try {
+                // Apply our handlers exactly ONCE when entering Shorts
                 originalSetActionHandler('nexttrack', () => navigateShorts('next'));
                 originalSetActionHandler('previoustrack', () => navigateShorts('prev'));
-            } catch(e) { }
+                console.log('[Shorts Media Keys] Handlers installed.');
+            } catch(e) { 
+                console.error('[Shorts Media Keys] Error installing handlers:', e);
+            }
+        } else if (!isShorts && isCurrentlyShorts) {
+            isCurrentlyShorts = false;
+            // We left shorts. YouTube will naturally overwrite handlers as needed 
+            // since our wrapper only blocks overrides on /shorts/
+            console.log('[Shorts Media Keys] Left shorts, disabled protection.');
         }
-    }, 1000);
-    
-    // Call it immediately once as well
-    if (window.location.pathname.startsWith('/shorts/')) {
-        try {
-            originalSetActionHandler('nexttrack', () => navigateShorts('next'));
-            originalSetActionHandler('previoustrack', () => navigateShorts('prev'));
-        } catch(e) { }
     }
+
+    // Check URL periodically (every 500ms) to detect SPA navigation
+    // This is safe because it only reads window.location and doesn't hammer the MediaSession API
+    setInterval(ensureHandlers, 500);
+    
+    // Call it immediately on load
+    ensureHandlers();
 }
