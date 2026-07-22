@@ -18,7 +18,7 @@ This extension seamlessly hooks into the browser's native Media Session API. It 
 ## Installation (Manual / Developer)
 
 1. Clone or download this repository.
-2. Open Google Chrome and navigate to `chrome://extensions/`.
+2. Open Google Chrome (or any other browser you are actively using) and navigate to `chrome://extensions/`.
 3. Enable **Developer mode** using the toggle switch in the top right corner.
 4. Click the **Load unpacked** button.
 5. Select the directory containing this extension (where `manifest.json` is located).
